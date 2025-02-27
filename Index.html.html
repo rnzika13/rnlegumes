@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RN LEGUMES</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            font-size: 1em;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 700px;
+            margin: 40px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15);
+        }
+        .title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2em;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        h3 {
+            background: #2ecc71;
+            color: white;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+        .item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 8px 0;
+            padding: 12px;
+            background: #ecf0f1;
+            border-radius: 6px;
+            transition: 0.3s;
+        }
+        .item:hover {
+            background: #d5dbdb;
+        }
+        .item input[type='checkbox']:checked + label {
+            color: red;
+            font-weight: bold;
+        }
+        button {
+            width: 100%;
+            padding: 16px;
+            font-size: 1.2em;
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            background-color: #219150;
+        }
+        select, input {
+            padding: 6px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">RN LEGUMES</h1>
+        <h3>🍄 Cogumelos</h3>
+        <div id="cogumelos"></div>
+        <h3>🍆 Frutos</h3>
+        <div id="frutos"></div>
+        <h3>🥕 Legumes</h3>
+        <div id="raizes"></div>
+        <h3>🌶️ Temperos</h3>
+        <div id="temperos"></div>
+        <h3>🥬 Verduras</h3>
+        <div id="folhosas"></div>
+        <button onclick="enviarWhatsApp()">Enviar para WhatsApp</button>
+    </div>
+
+    <script>
+        if (typeof window.categorias === 'undefined') {
+            window.categorias = {
+                cogumelos: ["Paris", "Porto Belo", "Shimeji preto", "Shiitake"],
+                frutos: ["Abóbora cabotiá", "Abobrinha bras.", "Abobrinha ital.", "Berinjela", "Brócolis", "Brócolis e couve-flor", "Brócolis lavado", "Chuchu", "Chuchu preto", "Couve-flor", "Maxixe", "Pepino comum", "Pimenta americana", "Pimenta cambuci", "Pimentão amarelo", "Pimentão verde", "Pimentão vermelho", "Quiabo", "Vagem", "Vagem holandesa", "Yakissoba"],
+                raizes: ["Açafrão", "Batata-doce", "Beterraba", "Cenoura", "Ervilha", "Ervilha torta", "Gengibre", "Inhame", "Mandioquinha", "Mandioquinha vácuo", "Mandioca coz.", "Mandioca crua", "Pinhão"],
+                temperos: ["Alho-poró", "Cebolinha", "Salsinha", "Salsinha/cebolinha"],
+                folhosas: ["Acelga c/ cen.", "Agrião", "Alface americana", "Alface crespa", "Alface lisa", "Couve", "Escarola", "Espinafre pic.", "Repolho", "Repolho roxo"]
+            };
+        }
+
+        function adicionarItens(lista, divId) {
+            const listaDiv = document.getElementById(divId);
+            lista.forEach(item => {
+                const div = document.createElement("div");
+                div.classList.add("item");
+                div.innerHTML = `
+                    <input type='checkbox' value='${item}' onchange='alterarCor(this)'>
+                    <label>${item}</label>
+                    <input type='number' min='1' placeholder='Qtd' class='quantidade'>
+                    <select class='unidade'>
+                        <option value='kg'>Kg</option>
+                        <option value='un'>Unidade</option>
+                        <option value='pacote'>Pacote</option>
+                    </select>
+                `;
+                listaDiv.appendChild(div);
+            });
+        }
+
+        function alterarCor(checkbox) {
+            let label = checkbox.nextElementSibling;
+            label.style.color = checkbox.checked ? "red" : "black";
+        }
+
+        Object.keys(window.categorias).forEach(cat => adicionarItens(window.categorias[cat], cat));
+    </script>
+</body>
+</html>
