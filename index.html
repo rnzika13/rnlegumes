@@ -107,7 +107,7 @@
                 const div = document.createElement("div");
                 div.classList.add("item");
                 div.innerHTML = `
-                    <input type='checkbox' value='${item}' onchange='alterarCor(this)'>
+                    <input type='checkbox' value='${item}'>
                     <label>${item}</label>
                     <input type='number' min='1' placeholder='Qtd' class='quantidade'>
                     <select class='unidade'>
@@ -120,12 +120,39 @@
             });
         }
 
-        function alterarCor(checkbox) {
-            let label = checkbox.nextElementSibling;
-            label.style.color = checkbox.checked ? "red" : "black";
-        }
-
         Object.keys(window.categorias).forEach(cat => adicionarItens(window.categorias[cat], cat));
+
+        function enviarWhatsApp() {
+            let mensagem = "*Lista de Compras RN LEGUMES:*%0A%0A";
+            
+            Object.keys(window.categorias).forEach(cat => {
+                let itensSelecionados = [];
+                
+                document.querySelectorAll(`#${cat} .item`).forEach(div => {
+                    let checkbox = div.querySelector("input[type='checkbox']");
+                    let quantidade = div.querySelector(".quantidade").value;
+                    let unidade = div.querySelector(".unidade").value;
+                    
+                    if (checkbox.checked && quantidade) {
+                        itensSelecionados.push(`- ${checkbox.value} (${quantidade} ${unidade})`);
+                    }
+                });
+    
+                if (itensSelecionados.length > 0) {
+                    mensagem += `*${cat.toUpperCase()}*%0A${itensSelecionados.join("%0A")}%0A%0A`;
+                }
+            });
+    
+            if (mensagem === "*Lista de Compras RN LEGUMES:*%0A%0A") {
+                alert("Selecione pelo menos um item antes de enviar.");
+                return;
+            }
+    
+            let telefone = "5511942653446";
+            let url = `https://wa.me/${telefone}?text=${mensagem}`;
+            
+            window.open(url, "_blank");
+        }
     </script>
 </body>
 </html>
