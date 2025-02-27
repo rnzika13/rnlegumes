@@ -5,82 +5,110 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RN LEGUMES</title>
     <style>
-        body { 
-            font-family: Arial, sans-serif; 
-            text-align: center; 
-            font-size: 1em; 
-            background-color: #ffffff;
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            font-size: 1em;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
         }
-        .container { 
-            max-width: 600px; 
-            margin: auto; 
-            background: rgba(255, 255, 255, 0.8); 
-            padding: 20px; 
-            border-radius: 10px; 
+        .container {
+            max-width: 700px;
+            margin: 40px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15);
         }
-        .item { 
-            display: flex; 
-            justify-content: space-between; 
-            margin: 5px 0; 
-            font-size: 0.85em; 
+        .title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2em;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        h3 {
+            background: #2ecc71;
+            color: white;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+        .item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 8px 0;
+            padding: 12px;
+            background: #ecf0f1;
+            border-radius: 6px;
+            transition: 0.3s;
+        }
+        .item:hover {
+            background: #d5dbdb;
+        }
+        .item input[type='checkbox']:checked + label {
+            color: red;
             font-weight: bold;
         }
-        .item input { width: 50px; margin-left: 10px; }
-        button { margin-top: 20px; padding: 10px; font-size: 1em; }
+        button {
+            width: 100%;
+            padding: 16px;
+            font-size: 1.2em;
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            background-color: #219150;
+        }
+        select, input {
+            padding: 6px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2>Escolha os itens</h2>
-        <h3>Verduras</h3>
-        <h4>Folhosas</h4>
-        <div id="folhosas"></div>
-        <h4>Temperos</h4>
-        <div id="temperos"></div>
-        <h3>Legumes</h3>
-        <h4>Raízes e tubérculos</h4>
-        <div id="raizes"></div>
-        <h4>Frutos</h4>
-        <div id="frutos"></div>
-        <h3>Cogumelos</h3>
+        <h1 class="title">RN LEGUMES</h1>
+        <h3>🍄 Cogumelos</h3>
         <div id="cogumelos"></div>
+        <h3>🍆 Frutos</h3>
+        <div id="frutos"></div>
+        <h3>🥕 Legumes</h3>
+        <div id="raizes"></div>
+        <h3>🌶️ Temperos</h3>
+        <div id="temperos"></div>
+        <h3>🥬 Verduras</h3>
+        <div id="folhosas"></div>
         <button onclick="enviarWhatsApp()">Enviar para WhatsApp</button>
     </div>
 
     <script>
-        const folhosas = [
-            "Alface crespa", "Alface lisa", "Alface americana", "Alface mista (s/ cenoura)", "Agrião",
-            "Escarola", "Almeirão", "Espinafre pic.", "Couve", "Repolho", "Repolho roxo", "Acelga c/ cen."
-        ];
-        
-        const temperos = [
-            "Salsinha", "Cebolinha", "Salsinha/cebolinha", "Alho-poró"
-        ];
+        if (typeof window.categorias === 'undefined') {
+            window.categorias = {
+                cogumelos: ["Paris", "Porto Belo", "Shimeji preto", "Shiitake"],
+                frutos: ["Abóbora cabotiá", "Abobrinha bras.", "Abobrinha ital.", "Berinjela", "Brócolis", "Brócolis e couve-flor", "Brócolis lavado", "Chuchu", "Chuchu preto", "Couve-flor", "Maxixe", "Pepino comum", "Pimenta americana", "Pimenta cambuci", "Pimentão amarelo", "Pimentão verde", "Pimentão vermelho", "Quiabo", "Vagem", "Vagem holandesa", "Yakissoba"],
+                raizes: ["Açafrão", "Batata-doce", "Beterraba", "Cenoura", "Ervilha", "Ervilha torta", "Gengibre", "Inhame", "Mandioquinha", "Mandioquinha vácuo", "Mandioca coz.", "Mandioca crua", "Pinhão"],
+                temperos: ["Alho-poró", "Cebolinha", "Salsinha", "Salsinha/cebolinha"],
+                folhosas: ["Acelga c/ cen.", "Agrião", "Alface americana", "Alface crespa", "Alface lisa", "Couve", "Escarola", "Espinafre pic.", "Repolho", "Repolho roxo"]
+            };
+        }
 
-        const raizes = [
-            "Cenoura", "Beterraba", "Mandioquinha", "Inhame", "Batata-doce", "Batata-doce roxa",
-            "Batata-doce jap.", "Cará", "Mandioca crua", "Mandioca coz.", "Gengibre", "Açafrão"
-        ];
-        
-        const frutos = [
-            "Berinjela", "Berinjela jap.", "Chuchu", "Pepino jap.", "Pepino caipira", "Jiló", "Quiabo",
-            "Abobrinha bras.", "Abobrinha ital.", "Pimentões (3 cores)", "Milho doce", "Milho verde trad.",
-            "Abób. cabotiá pic./fatiada", "Abób. p/ doce", "Pimenta d.-de-moça", "Pimenta de cheiro"
-        ];
-        
-        const cogumelos = [
-            "Shimeji preto", "Shiitake", "Porto Belo", "Paris"
-        ];
-        
         function adicionarItens(lista, divId) {
             const listaDiv = document.getElementById(divId);
             lista.forEach(item => {
                 const div = document.createElement("div");
                 div.classList.add("item");
                 div.innerHTML = `
-                    <label>
-                        <input type='checkbox' value='${item}'> ${item}
-                    </label>
+                    <input type='checkbox' value='${item}' onchange='alterarCor(this)'>
+                    <label>${item}</label>
                     <input type='number' min='1' placeholder='Qtd' class='quantidade'>
                     <select class='unidade'>
                         <option value='kg'>Kg</option>
@@ -92,34 +120,12 @@
             });
         }
 
-        adicionarItens(folhosas, "folhosas");
-        adicionarItens(temperos, "temperos");
-        adicionarItens(raizes, "raizes");
-        adicionarItens(frutos, "frutos");
-        adicionarItens(cogumelos, "cogumelos");
-        
-        function enviarWhatsApp() {
-            let selecionados = [];
-            document.querySelectorAll(".item").forEach(div => {
-                let checkbox = div.querySelector("input[type=checkbox]");
-                let quantidade = div.querySelector(".quantidade").value;
-                let unidade = div.querySelector(".unidade").value;
-                
-                if (checkbox.checked && quantidade) {
-                    selecionados.push(`${quantidade} ${unidade} de ${checkbox.value}`);
-                }
-            });
-            
-            if (selecionados.length === 0) {
-                alert("Selecione pelo menos um item e informe a quantidade!");
-                return;
-            }
-            
-            let mensagem = "Olá, gostaria de pedir:\n" + selecionados.join("\n");
-            let numero = "5511942653446"; // Altere para seu número com DDD e código do país
-            let link = `https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`;
-            window.open(link, "_blank");
+        function alterarCor(checkbox) {
+            let label = checkbox.nextElementSibling;
+            label.style.color = checkbox.checked ? "red" : "black";
         }
+
+        Object.keys(window.categorias).forEach(cat => adicionarItens(window.categorias[cat], cat));
     </script>
 </body>
 </html>
